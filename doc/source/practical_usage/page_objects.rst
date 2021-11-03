@@ -30,7 +30,7 @@ Se fizermos isso vamos acabar com muito código repetido e não vamos conseguir 
             loginPage = LoginPage(driver)
             loginPage.login(config.USERNAME, config.PASSWORD)
 
-            assert driver.title = "My Profile" # Titulo da página que vem depois do login.
+            assert driver.title == "My Profile" # Titulo da página que vem depois do login.
 
 Não tem porque não fazer o page object bem expressivo:
 
@@ -40,11 +40,14 @@ Não tem porque não fazer o page object bem expressivo:
     class BasePage:
         def __init__(self, driver):
             self.driver = driver
-            self._username_element = self.driver.find_element(By.ID, 'id_username')
-            self._password_element = self.driver.find_element(By.ID, 'id_password')
 
 
     class LoginPage(BasePage):
+        def __init__(self)
+            super().__init__()
+            self._username_element = self.driver.find_element(By.ID, 'id_username')
+            self._password_element = self.driver.find_element(By.ID, 'id_password')
+
         @property
         def username(self):
             return self._username_element.text
